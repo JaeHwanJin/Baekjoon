@@ -8,22 +8,24 @@ for i in range(M):
     graph[y].append(x)
 visited = [0] * (N + 1)
 
+cnt = 0
 result = []
 
-def DFS(start, num):
-    num += 1
+def DFS(start, end):
+    global cnt
     visited[start] = 1
-    if start == b:
-        result.append(num)
+    cnt += 1
+    if start == end:
+        result.append(cnt)
     for i in graph[start]:
         if not visited[i]:
-            DFS(i, num)
-DFS(a, 0)
+            DFS(i, end)
+            cnt -= 1
+
+
+DFS(a, b)
+
 if len(result) == 0:
     print(-1)
 else:
-    print(result[0]-1)
-
-
-# [[], [2, 3], [1, 7, 8, 9], [1], [5, 6], [4], [4], [2], [2], [2]]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    print(result[0] - 1)

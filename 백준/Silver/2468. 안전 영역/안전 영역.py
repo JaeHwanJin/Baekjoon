@@ -1,39 +1,48 @@
 from collections import deque
-
-
-def BFS(x, y):
-    mr = [0, 0, 1, -1]
-    mc = [1, -1, 0, 0]
+ 
+n = int(input())
+graph = []
+maxNum = 0
+ 
+for i in range(n):
+    graph.append(list(map(int, input().split())))
+    for j in range(n):
+        if graph[i][j] > maxNum:
+            maxNum = graph[i][j] 
+ 
+ 
+ 
+dx = [0 ,0, 1, -1]
+dy = [1, -1, 0 ,0]
+def bfs(a, b, value, visited):
     q = deque()
-    q.append((x, y))
+    q.append((a, b))
+    visited[a][b] = 1
+ 
     while q:
         x, y = q.popleft()
-        for k in range(4):
-            nr = mr[k] + x
-            nc = mc[k] + y
-            if 0 <= nr < N and 0 <= nc < N and island[nr][nc] > H and visited[nr][nc] == 0:
-                visited[nr][nc] = 1
-                q.append((nr, nc))
-
-
-N = int(input())
-
-island = [list(map(int, input().split())) for _ in range(N)]
-
-MAX = max(max(*island))
-
-H = 0
-M = 0
-while H < MAX:
-    visited = [[0] * N for _ in range(N)]
+ 
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < n and 0 <= ny < n:
+                if graph[nx][ny] > value and visited[nx][ny] == 0:
+                    visited[nx][ny] = 1
+                    q.append((nx, ny))
+ 
+ 
+result = 0
+for i in range(maxNum): 
+    visited = [[0] * n for i in range(n)]
     cnt = 0
-    for i in range(N):
-        for j in range(N):
-            if island[i][j] > H and visited[i][j] == 0:
-                BFS(i, j)
+ 
+    for j in range(n):
+        for k in range(n):
+            if graph[j][k] > i and visited[j][k] == 0: 
+                bfs(j, k, i, visited)
                 cnt += 1
-    M = max(M, cnt)
-    H += 1
-    # print('i : ', island)
-    # print('v : ', visited)
-print(M)
+ 
+    if result < cnt:
+        result = cnt
+ 
+print(result)

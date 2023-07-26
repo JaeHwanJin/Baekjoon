@@ -1,19 +1,9 @@
-def change(n):
-    num = []
-    while n > 0:
-        x = n % 2
-        n //= 2
-        num.append(str(x))
-    num = "".join(reversed(num))
-    result = num.count('1')
-    return result
-
 def solution(n):
-    answer = change(n)
-    print(answer)
+    answer = (str(bin(n)))[2:]
     result = 0
-    for i in range(n+1, 1000001):
-        if answer == change(i):
-            return i        
-    # return result
-    
+    while True:
+        n += 1
+        result = (str(bin(n)))[2:]
+        if answer.count("1") == result.count("1"):
+            break
+    return n

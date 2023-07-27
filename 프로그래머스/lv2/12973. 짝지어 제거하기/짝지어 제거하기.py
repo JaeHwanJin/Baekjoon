@@ -1,16 +1,11 @@
-def solution(s):    
-    s = list(map(str, s))
-    st = []
+def solution(s):
+    answer = 0
+    stack = [0]
     for i in s:
-        if len(st) == 0:
-            st.append(i)
+        if stack[-1] != i:
+            stack.append(i)
         else:
-            if st[-1] == i:
-                st.pop()
-            else:
-                st.append(i)
-    if len(st) == 0:
-        answer = 1
-    else:
-        answer = 0
+            stack.pop()
+    if len(stack) == 1:
+        answer = 1            
     return answer

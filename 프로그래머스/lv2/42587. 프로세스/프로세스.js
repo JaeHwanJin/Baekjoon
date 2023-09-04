@@ -1,34 +1,18 @@
 function solution(priorities, location) {
-    var cnt = 0;
-    var target = location;
-
-    while (priorities.length > 0) {
+    var answer = 0;
+    var maxPriority = Math.max(...priorities);
+    
+    while (true) {
         var current = priorities.shift();
-        var isPrinted = true;
-
-        for (var i = 0; i < priorities.length; i++) {
-            if (priorities[i] > current) {
-                isPrinted = false;
-                break;
-            }
-        }
-
-        if (!isPrinted) {
-            priorities.push(current);
-            if (target === 0) {
-                target = priorities.length - 1;
-            } else {
-                target--;
-            }
+        
+        if (current === maxPriority) {
+            answer++;
+            if (location === 0) return answer;
+            maxPriority = Math.max(...priorities);
         } else {
-            cnt++;
-            if (target === 0) {
-                return cnt;
-            } else {
-                target--;
-            }
+            priorities.push(current);
         }
+        
+        location = (location - 1 + priorities.length) % priorities.length;
     }
-
-    return cnt;
 }

@@ -1,27 +1,26 @@
 function solution(maps) {
-    const yLen = maps.length;
-    const xLen = maps[0].length;
-    const goalY = yLen - 1;
-    const goalX = xLen - 1;
-    const dy = [0, 0, 1, -1];
-    const dx = [-1, 1, 0, 0];
-    
-    const queue = [];
-    queue.push([0, 0, 1]);
-    
-    while(queue.length) {
-        const [curY, curX, move] = queue.shift();
-        if(curY === goalY && curX === goalX) return move;
-        
-        for(let i = 0; i < 4; i++) {
-            const ny = curY + dy[i];
-            const nx = curX + dx[i];
-            if(ny >= 0 && ny < yLen && nx >= 0 && nx < xLen && maps[ny][nx] === 1) {
-                queue.push([ny, nx, move + 1]);
-                maps[ny][nx] = 0;
+    var mx = [0, 0, 1, -1];
+    var my = [1, -1, 0, 0];
+    var x = maps.length;
+    var y = maps[0].length;
+    var q = []
+    q.push([0, 0, 1])
+    while (q.length){
+        const [curX, curY, move] = q.shift();
+        if(curX==x-1 && curY==y-1){
+            return move;
+        }
+        for(let i=0; i<4; i++){
+            const vx = mx[i] + curX;
+            const vy = my[i] + curY;
+            if(0 <= vx && vx < x && 0 <= vy && vy < y && maps[vx][vy]==1){
+                q.push([vx, vy, move+1]);
+                maps[vx][vy] = 0;
             }
         }
     }
     
     return -1;
 }
+
+

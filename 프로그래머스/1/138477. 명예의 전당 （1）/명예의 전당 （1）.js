@@ -1,20 +1,17 @@
+
 function solution(k, score) {
-    var answer = [];
-    var stack = [score[0]];
-    for(let i=1; i<score.length; i++){
-        var min = Math.min(...stack);
-        if(stack.length<k){
-            stack.push(score[i]);
+    const stack = []
+    return score.reduce((a,c) => {
+        if(stack.length < k) {
+            stack.push(c)
+            stack.sort((a,b) => a - b)
         }
-        else{
-            if(score[i]>min){
-                var idx = stack.indexOf(min)
-                stack.splice(idx,1)
-                stack.push(score[i])
-            }
+        else {
+            stack.push(c)
+            stack.sort((a,b) => a - b)
+            stack.shift()
         }
-        answer.push(min)
-    }
-    answer.push(Math.min(...stack))
-    return answer;
+        a.push(stack[0])
+        return a
+    },[])
 }
